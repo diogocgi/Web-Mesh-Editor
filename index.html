@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="shortcut icon" type="css/favicon-16.png" href="css/favicon-16.png"/>
+		<title>ShaderCraft Lab</title>
+		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+		 <!-- adapt to any screen -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		 <!-- Website description metadata -->
+		<meta name="description" content="3D modeling software" />
+		<!--<meta name="keywords" content="modeling" />-->
+		<meta name="author" content="Diogo Guedes, Filipe Reis" />
+
+		<!-- styling -->
+		<!-- Theme style  -->
+		<link rel="stylesheet" href="./css/main.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+		<!-- WEBGL -->
+		<script type="text/javascript" src="./js/webGL/interface.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/basegrid_vshader.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/basegrid_fshader.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/baseMesh_vshader.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/baseMesh_fshader.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader11.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader10.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader09.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader08.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader07.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader06.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader05.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader04.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader03.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader01.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/vShader00.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/fShader04.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/fShader03.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/fShader02.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/fShader01.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/shaders/fShader00.js" defer></script>
+		<script type="text/javascript" src="./webgl_resources/lib/maths.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/importedModel.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/historyManager.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/sceneManager.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/meshPropertyState.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/renderer.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/shader.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/shaderProgram.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/rawModel.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/grid.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/transform.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/bufferUtils.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/textureUtils.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/renderLoop.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/enums.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/camera.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/cameraController.js" defer></script>
+		<script type="text/javascript" src="./js/webGL/mainWebGL.js" defer></script>
+
+	</head>
+
+	<body scroll="no" onresize="screenResizeAdaptation()">
+			
+		<!-- navbar -->
+		<div class="topnav" id="myTopnav">
+			<a href="#home" id="sclablogo" >ShaderCraft Lab</a>
+			<div class="dropdown">
+				<button class="dropbtn">
+					File 
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a id="open-file-menu-btn" href="#">Open file</a>
+					<a id="new-file-menu-btn" href="#">New file</a>
+					<a id="save-scene-menu-btn" href="#">Save scene</a>
+					<a id="import-model-menu-btn" href="#">Import model</a>
+					<a id="export-model-menu-btn" href="#">Export model</a>
+					<a id="settings-menu-btn" href="#">Settings</a>
+					<a id="exit-menu-btn" href="#">Exit</a>
+				</div>
+			</div> 
+			<div class="dropdown">
+				<button class="dropbtn">
+					Create 
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a id="plane-menu-btn" href="#">Plane</a>
+					<a id="cube-menu-btn" href="#">Cube</a>
+					<a id="sphere-menu-btn" href="#">Sphere</a>
+					<a id="piramid-menu-btn" href="#">Piramid</a>
+				</div>
+			</div> 
+			<div class="dropdown">
+				<button class="dropbtn">
+					Edit model
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a id="lock-transformations-menu-btn" href="#">Lock transformations</a>
+				</div>
+			</div> 
+			<a id="texture-editor-menu-btn" href="#">Texture Editor</a>
+			<a id="shader-editor-menu-btn" href="#">Shader Editor</a>
+			<a id="redo-menu-btn" href="#" style="float: right"><i class="material-icons">redo</i></a>
+			<a id="undo-menu-btn" href="#" style="float: right"><i class="material-icons">undo</i></a>
+			
+
+			<a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsiveNavBar()">&#9776;</a>
+		</div>
+
+		<!-- sidebar -->
+		<div id="sidebar" >
+				
+			<ul>
+				<li  class="toggle-btn" onclick="toggleSidebar(), toggleRotate()">
+					<button class="btn ">
+						<i id="arrow-rotate" class="fa fa-angle-right" style="font-size:20px; padding: 2px 5px 2px 5px;"></i>
+					</button>
+				</li>
+				<li  style="font-size: 14px">
+					<p class="sidebar-title"  style="font-size: 16px">Object transformations</p>
+					<p>Translate</p>
+					x: <input type="text" id="x-translate" placeholder="--" size="5">
+					y: <input type="text" id="y-translate" placeholder="--" size="5">
+					z: <input type="text" id="z-translate" placeholder="--" size="5"> 
+					<p>Rotate</p>
+					x: <input type="text" id="x-rotate" placeholder="--" size="5">
+					y: <input type="text" id="y-rotate" placeholder="--" size="5">
+					z: <input type="text" id="z-rotate" placeholder="--" size="5"> 
+					<p>Scale</p>
+					x: <input type="text" id="x-scale" placeholder="--" size="5">
+					y: <input type="text" id="y-scale" placeholder="--" size="5">
+					z: <input type="text" id="z-scale" placeholder="--" size="5"> 
+				</li>
+				<li>
+					<p class="sidebar-title">Scene hierarchy</p>
+					
+					<!--rows="25" cols="35"-->
+					<!--<textarea id="hierarchy-textarea" wrap='off' style="overflow:auto; resize:none; background-color: #dfdbce; padding: 10px" readonly></textarea>-->
+
+					<div id="hierarchy-textbox">
+
+						<!--<div id="sample_text" onClick="colorchange()">Welcome to</div>-->
+						<!--<p><a href="#">Link Text Description</a></p>
+						<p><a href="#">Link Text Description</a></p>
+						<p><a href="#">Link Text Description</a></p>
+						<p><a href="#">Link Text Description</a></p>-->
+					</div>
+				</li>
+			</ul>
+		</div>
+
+		<input type="file" id="real-import-model-btn" hidden="hidden" />
+
+		<!-- tool belt -->
+		<!--<div style="padding-left:16px">
+		</div>
+		-->
+
+		<script>
+			function responsiveNavBar() {
+				var x = document.getElementById("myTopnav");
+				
+				if (x.className === "topnav") {
+					x.className += " responsive";
+				} 
+				else {
+					x.className = "topnav";
+				}
+			}
+		</script>
+
+		<!-- toggle sidebar -->
+		<script>
+			function toggleSidebar() {
+				document.getElementById("sidebar").classList.toggle('active');
+			}
+		</script>
+
+		<!-- rotate sidebar arrow icon -->
+		<script>
+			function toggleRotate() {
+				document.getElementById("arrow-rotate").classList.toggle('down');
+			}
+		</script>
+
+		<!-- Webgl canvas -->
+		<div id="canvas_div" class="container" onresize="screenResizeAdaptation()">
+			<canvas id="canvas"></canvas>
+		</div>
+
+	</body>
+</html>
