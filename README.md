@@ -10,6 +10,11 @@ Since then I have been improving it but due to lack of time it's still very roug
 
 At the moment I'm in the process of translating the comments.
 
+## Webpage screenshot
+
+<img src="https://github.com/Diogo525/Web-Mesh-Editor/blob/master/_assets/Screenshot.png" width="900">
+
+
 ## Tools
 
 This project is developed in pure JavaScript and doesn't use any frameworks.
@@ -18,7 +23,7 @@ GLSL was used for shader programming.
 
 ## Resources
 
-During development I came across various interesting websites that explained the different CG topics. Because the list is a little long, it's stored in the following Web-sources.txt file.
+During development I came across various interesting websites that explained the different CG topics. Because the list is a little long, it's stored in the file [Web_sources.txt](https://github.com/Diogo525/Web-Mesh-Editor/blob/master/_assets/Web_sources.txt).
 
 
 
