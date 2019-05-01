@@ -18,7 +18,7 @@ GLSL was used for shader programming.
 
 ## Resources
 
-During development I came across various interesting websites that explained the different CG topics. Because the list is a little long, it's stored in the following text file: 
+During development I came across various interesting websites that explained the different CG topics. Because the list is a little long, it's stored in the following Web-sources.txt file.
 
 
 
