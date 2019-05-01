@@ -8,11 +8,13 @@ As I was developing this project I started to understand part of the magic of ga
 
 Since then I have been improving it but due to lack of time it's still very rough around the edges. In order to keep learning about CG I decided to continue working on it and describe how the various components work. 
 
-At the moment I'm in the process of tranlating the comments to english.
+At the moment I'm in the process of translating the comments.
 
 ## Tools
 
 This project is developed in pure JavaScript and doesn't use any frameworks.
+
+GLSL was used for shader programming.
 
 ## Resources
 
