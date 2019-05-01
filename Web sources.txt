@@ -1,0 +1,39 @@
+The structure of my project was initially based upon the one used by the author of this repo:
+	https://github.com/sketchpunk/FunWithWebGL2
+	
+For WebGL theory and practice:
+	https://www.youtube.com/channel/UCSnyjB_8iVxi2ZAfn_1L6tA
+	https://webglfundamentals.org/webgl/lessons
+	http://www.geertarien.com/blog/2017/07/16/overview-of-the-rendering-pipeline-in-webgl/
+	https://www.scratchapixel.com
+	http://www.javascriptkit.com/javatutors/requestanimationframe.shtml
+	https://learnwebgl.brown37.net/index.html
+	https://learnopengl.com/
+	https://gamedevelopment.tutsplus.com/tutorials
+	https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API
+	https://www.khronos.org/opengl/wiki
+
+For GLSL:
+	http://www.lighthouse3d.com/tutorials/glsl-tutorial/
+
+For JavaScript:
+	https://javascript.info/
+	https://github.com/javascript-tutorial/en.javascript.info/tree/master
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
