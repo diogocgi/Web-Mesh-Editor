@@ -293,8 +293,8 @@ function fitToContainer() {
  */
 function setEventListeners(){
     
-     // add event listeners to the undo and redo buttons, because th emethods are only accessible through an instance of the SceneManager class
-     document.getElementById("undo-menu-btn").addEventListener("click", function() { 
+     // add event listeners to the undo and redo buttons, because the methods are only accessible through an instance of the SceneManager class
+    document.getElementById("undo-menu-btn").addEventListener("click", function() { 
         historyManager.undoMeshState()
     });
 
@@ -345,7 +345,8 @@ function setEventListeners(){
         if (sManager.currentlySelectedObject != null)
         {
             console.log(sManager.currentlySelectedObject.vertexPosArray);
-            // guardar o estado atual antes do lock transformation
+
+            // save current state before locking transformation
             historyManager.backupCurrentPropertyState(sManager.currentlySelectedObject.id, HistoryMeshProperty.LOCK_TRANSFORMATION, [sManager.currentlySelectedObject.vertexPosArray.slice(), 
                 sManager.currentlySelectedObject.transform.position.slice(), sManager.currentlySelectedObject.transform.rotation.slice(), sManager.currentlySelectedObject.transform.scale.slice()]);
 
@@ -369,16 +370,9 @@ function setEventListeners(){
         }
     });
 
-     /** NOTE: a informaçao sobre a translacao, rotacao e escalamento apenas estao presentes nos ficheiros que guardam informação sobre a scene toda, 
-         ou seja, num formato que é proprio do programa! Quando se faz export de um modelo, o ficheiro resultante nao vai ter os dados da translacao,
-         rotacao e nem de tranalacao, mas apenas da posicao dos vertices sem ter em conta as transformaçoes atuais do modelo (ou seja, admite que 
-         a translacao, rotacao e escalamento estao todos a 0.) Se quisermos incluir a informacao da translacao, rotacao e/ou escalamente nos vertices do
-         modelo 3d, é necessario fazer FREEZE TRANSFORMATION, o que irá aplicar as transformacoes aos vertices do modelo antes de estes serem armazenados
-         no ficheiro => após o FREEZE TRANSFORMATION; as transoformacoes do modelo sao repostas a zero, mas o objeto continua a estar posicionado, rodado e 
-         escalado pois as transformaçoes foram aplicadas diretamente aos seus vertices (e nao apenas temporariamente aplicadas aos vertices, no gpu, usando a
-         model matrix.)
-      */
-    // Export selected model
+    /**
+     *  Export selected model
+     */
     document.getElementById("export-model-menu-btn").onclick = function(){
 
         if (sManager.currentlySelectedObject != null)
@@ -443,8 +437,6 @@ function setEventListeners(){
             color= "";
             normals= "";
 
-            //let total = vertices + normals + color + index;
-            //let name = "scene1" + ".obj";
             let name = sManager.currentlySelectedObject.name  + ".obj";
             download(allModelInfo, name, 'text/plain');
         }
@@ -457,7 +449,6 @@ function setEventListeners(){
     /**
      * Import model into the scene
      */
-
     const realImportModelBtn = document.getElementById("real-import-model-btn");
 
     document.getElementById("import-model-menu-btn").addEventListener("click", function() {
@@ -476,12 +467,10 @@ function setEventListeners(){
         
         // called when the load event is fired: when content read with readAsText is available
         fileReader.onload = function() {
-            //console.log(this.result);
+            
             let importedModel = parseOBJfile(filename, this.result);
 
             importModelFromFile(importedModel.name, importedModel.vertices);
-
-            //importModelFromFile();
         }
         
         fileReader.readAsText(this.files[0]);
@@ -489,10 +478,19 @@ function setEventListeners(){
     });
 }
 
-// returns an ImportedModel instance
+/**
+ * Parse obj file and import the mesh within
+ * 
+ * Returns an ImportedModel instance
+ * @param {string} filename 
+ * @param {*} text 
+ */
 function parseOBJfile(filename, text)
 {
-    // como o export é feito para apenas um modelo 3d, o nome do modelo pode ser obtido atraves do nome do ficheiro (e nao atraves da sua inclusao erradamente no ficheiro obj)
+    /**
+     *  Because exporting only works for one model at a time (while the Mesh combining functionality is not implemented), the name of the model can be
+     *  obtained through the file name (and not by the inclusion of the name in the the obj file)
+     */
     let meshName = filename.split('.')[0];
     let vertices = [];
 
@@ -501,7 +499,7 @@ function parseOBJfile(filename, text)
         if (lines[i].charAt(0) == "v")
         {
             let vertexPos = lines[i].split(' ');
-            //console.log(vertexPos);
+            
             vertices.push(parseFloat(vertexPos[1]));
             vertices.push(parseFloat(vertexPos[2]));
             vertices.push(parseFloat(vertexPos[3]));
@@ -511,6 +509,11 @@ function parseOBJfile(filename, text)
     return new ImportedModel(meshName, vertices);
 }
 
+/**
+ * Importing model from obj file
+ * @param {string} meshName 
+ * @param {Float32Array} vertices 
+ */
 function importModelFromFile(meshName, vertices) {
 
     let vertexShader = new Shader(gl.VERTEX_SHADER, baseMesh_vshader, ["a_vertexPosition"], ["u_modelMatrix", "u_viewMatrix", "u_projectionMatrix"]);
@@ -521,7 +524,7 @@ function importModelFromFile(meshName, vertices) {
 
     let shaderProgram = new ShaderProgram(spID, "test shader", vertexShader, fragmentShader);
 
-    //currentShaderProgram.push(shaderProgram);
+    // currentShaderProgram.push(shaderProgram);
     sManager.sceneShaderProgramList[spID.toString()] = shaderProgram;
 
     let colors = [];
@@ -542,8 +545,8 @@ function importModelFromFile(meshName, vertices) {
 
     cubeMesh.addVertexAttrib("a_vertexPosition", cubeMesh.posVBO, 3);
 
-    // chamar dps do useShaderProgram()
-    // bind dos vertex attributes adicionados nas 2 linhas anteriores
+    // call after useShaderProgram()
+    // binding of the vertex attributes added in the previous lines
     cubeMesh.loadVertexAttribToShaderAttribs();
 
     cubeMesh.addUniform("u_modelMatrix",  cubeMesh.transform.modelMatrix, "mat4");
@@ -551,11 +554,11 @@ function importModelFromFile(meshName, vertices) {
     cubeMesh.addUniform("u_projectionMatrix",  sManager.mainCamera.projectionMatrix, "mat4");
     cubeMesh.addUniform("u_color",  [0.5, 0.5, 0.5, 1], "vec4");
 
-    // chamar dps do useShaderProgram()
-    // bind dos uniforms adicionados nas linhas anteriores
+    // call after useShaderProgram()
+    // binding the uniforms added in the previous lines
     cubeMesh.loadUniformsToShaderVariables();
 
-    // colocar o cubo na lista da modelos da scene
+    // add the cube to the list of the models in the scene
     sManager.sceneMeshList[meshid.toString()] = cubeMesh;
 
     // put the model on the scene hierarchy 
